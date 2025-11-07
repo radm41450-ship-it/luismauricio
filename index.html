@@ -1,469 +1,205 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ciencias Aplicadas e Informática Automotriz</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Proyecto Conectividad Avanzada</title>
+  <meta name="description" content="Proyecto educativo sobre IoT, conectividad avanzada y experiencias inmersivas." />
   <style>
+    :root {
+      --accent: #06b6d4;
+      --accent2: #7c3aed;
+      --radius: 12px;
+      --maxw: 1100px;
+      --bg: #0f1724;
+      --text: #e2e8f0;
+      font-family: "Inter", system-ui, sans-serif;
+      scroll-behavior: smooth;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      margin: 0;
-      font-family: 'Orbitron', sans-serif;
-      background: radial-gradient(circle at top left, #0b0e11, #12181b, #181f23);
-      color: #e0e0e0;
-      line-height: 1.8;
-    }
-    header {
-      background: linear-gradient(to bottom right, rgba(0, 173, 181, 0.85), rgba(57, 62, 70, 0.95)),
-                  url('https://images.unsplash.com/photo-1608222351212-18bc1b55c734?auto=format&fit=crop&w=1600&q=80') center/cover;
-      color: white;
-      text-align: center;
-      padding: 80px 20px;
-      box-shadow: 0 0 50px rgba(0,255,255,0.2);
-    }
-    header h1 {
-      font-size: 3em;
-      text-shadow: 0 0 15px #00fff0;
-    }
-    header p {
-      font-size: 1.3em;
-      color: #cfffff;
-    }
-    nav {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      background: #1f2b33;
-      border-top: 2px solid #00adb5;
-      border-bottom: 2px solid #00adb5;
-    }
-    nav a {
-      color: #00fff0;
-      text-decoration: none;
-      padding: 15px 25px;
-      font-weight: bold;
-      text-transform: uppercase;
-      transition: 0.3s;
-    }
-    nav a:hover {
-      background: #00fff0;
-      color: #111;
-    }
-    .container {
-      width: 90%;
-      max-width: 1200px;
-      margin: 30px auto;
-      background: rgba(15,15,15,0.95);
-      padding: 40px;
-      border-radius: 15px;
-      box-shadow: 0 0 40px rgba(0,255,255,0.15);
-    }
-    h2 {
-      color: #00e5ff;
-      border-left: 5px solid #00fff0;
-      padding-left: 10px;
-    }
-    h3 {
-      color: #00fff0;
-      margin-top: 20px;
-    }
-    img {
-      max-width: 100%;
-      border-radius: 10px;
-      border: 2px solid #00adb5;
-      box-shadow: 0 0 20px rgba(0,255,255,0.2);
-      margin: 20px 0;
-    }
-    .video-wrapper {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      margin: 20px 0;
-      border: 2px solid #00e5ff;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 0 25px rgba(0,255,255,0.3);
-    }
-    .video-wrapper iframe {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-    }
-    footer {
-      background: #0a0a0a;
-      color: #00e5ff;
-      text-align: center;
-      padding: 40px 0;
-      border-top: 2px solid #00e5ff;
-    }
-    form {
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      min-height: 100vh;
     }
-    input, textarea {
-      padding: 10px;
-      border-radius: 5px;
-      border: none;
-      outline: none;
-      font-family: 'Orbitron', sans-serif;
-      font-size: 1em;
+    header {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 1rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
     }
-    input[type="submit"] {
-      background: #00fff0;
-      color: #111;
-      font-weight: bold;
+    .brand { display: flex; align-items: center; gap: .7rem; }
+    .logo {
+      width: 48px; height: 48px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff;
+      font-size: 1.1rem;
+    }
+    nav { display: flex; gap: .5rem; flex-wrap: wrap; }
+    .navlink {
+      padding: .5rem .9rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: 0.3s;
+      color: var(--text);
+      transition: all .3s ease;
+      opacity: 0.8;
     }
-    input[type="submit"]:hover {
-      background: #00adb5;
+    .navlink:hover, .navlink.active {
+      background: rgba(6,182,212,0.15);
+      opacity: 1;
     }
-    ul {
-      list-style-type: square;
-      margin-left: 20px;
+    .wrap { flex: 1; max-width: var(--maxw); margin: 0 auto; padding: 1rem 1.5rem; }
+    .card {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+      backdrop-filter: blur(8px);
+      margin-bottom: 1.5rem;
+      display: none;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all .5s ease;
+    }
+    .card.active { display: block; opacity: 1; transform: translateY(0); }
+    .title { font-size: 1.8rem; margin-bottom: .8rem; }
+    .subtitle { color: #94a3b8; margin-bottom: 1rem; }
+    img { max-width: 100%; border-radius: 12px; margin-top: 1rem; }
+    .btn {
+      display: inline-block;
+      padding: .6rem 1rem;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      color: #fff;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: transform .2s;
+    }
+    .btn:hover { transform: scale(1.05); }
+    form { display: grid; gap: .7rem; margin-top: .5rem; }
+    input, textarea, select {
+      width: 100%;
+      padding: .6rem .8rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.02);
+      color: var(--text);
+      font-size: 1rem;
+    }
+    textarea { min-height: 100px; resize: vertical; }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      color: #94a3b8;
+      font-size: .9rem;
+    }
+    @media (max-width: 800px) {
+      header { flex-direction: column; align-items: flex-start; }
+      nav { width: 100%; justify-content: flex-start; }
     }
   </style>
 </head>
-
 <body>
+  <header>
+    <div class="brand">
+      <div class="logo">IoT</div>
+      <div>
+        <strong>Conectividad Avanzada</strong><br>
+        <small style="color:#94a3b8">Proyecto educativo · Bachillerato Técnico</small>
+      </div>
+    </div>
+    <nav>
+      <span class="navlink active" data-target="home">Inicio</span>
+      <span class="navlink" data-target="info">Información</span>
+      <span class="navlink" data-target="contact">Contacto</span>
+    </nav>
+  </header>
 
-<header>
-  <h1>Ciencias Aplicadas e Informática Automotriz</h1>
-  <p>Innovación, Tecnología y Futuro en la Ingeniería de Vehículos</p>
-</header>
+  <div class="wrap">
+    <!-- INICIO -->
+    <section class="card page active" id="home">
+      <h1 class="title">Explora el Mundo del Internet de las Cosas</h1>
+      <p class="subtitle">El Internet de las Cosas (IoT) representa una nueva era tecnológica donde los dispositivos físicos se conectan a la red para recopilar y compartir información en tiempo real.</p>
+      <p>En el bachillerato técnico, este campo es fundamental para comprender cómo funcionan las tecnologías modernas que nos rodean: sensores, redes inalámbricas, automatización y sistemas inteligentes que optimizan la vida diaria.</p>
+      <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop" alt="Dispositivos conectados IoT" />
+      <p>Este sitio te mostrará los principios de conectividad avanzada, sus aplicaciones y cómo el IoT y la realidad extendida (XR) transforman la educación, la salud y la industria.</p>
+      <button class="btn" data-target="info">Leer más</button>
+    </section>
 
-<nav>
-  <a href="#introduccion">Inicio</a>
-  <a href="#mecanica">Ciencias Aplicadas</a>
-  <a href="#informatica">Informática Automotriz</a>
-  <a href="#robotica">Robótica</a>
-  <a href="#energias">Energías</a>
-  <a href="#historia">Historia</a>
-  <a href="#futuro">Futuro</a>
-  <a href="#contacto">Contacto</a>
-</nav>
-<section id="introduccion" class="container">
-  <h2>Introducción</h2>
-  <p>
-    La ingeniería automotriz y la informática aplicada son campos en constante evolución, combinando física, electrónica, programación y diseño para crear vehículos más eficientes, seguros y sostenibles. 
-    Esta página explora desde los conceptos básicos hasta las tecnologías avanzadas que están transformando la industria automotriz moderna.
-  </p>
-  <img src="https://images.unsplash.com/photo-1581091215363-201d5b4fa4e5?auto=format&fit=crop&w=1600&q=80" alt="Vehículo moderno con tecnología avanzada">
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/3_LVYlYv3eM" title="Video sobre innovación automotriz" frameborder="0" allowfullscreen></iframe>
-  </div>
-  <p>
-    A través de la combinación de ciencias aplicadas, electrónica y software, los ingenieros diseñan vehículos capaces de adaptarse a distintos entornos, optimizar el consumo energético y garantizar la seguridad de los pasajeros.
-  </p>
-</section>
+    <!-- INFORMACIÓN -->
+    <section class="card page" id="info">
+      <h2 class="title">Información General</h2>
+      <p>La conectividad avanzada combina tecnologías como <strong>5G</strong>, <strong>Wi-Fi 6</strong> y <strong>fibra óptica</strong> para garantizar una comunicación más rápida, segura y estable. Gracias a ello, los dispositivos inteligentes pueden compartir grandes volúmenes de datos en tiempo real.</p>
+      <p>El <strong>Internet de las Cosas (IoT)</strong> permite que sensores y dispositivos interactúen de forma automática. Por ejemplo, un sensor de humedad puede enviar información a un sistema de riego inteligente para activar el agua solo cuando el suelo lo necesita.</p>
+      <img src="https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop" alt="Red de sensores IoT" />
+      <p>Además, las <strong>experiencias inmersivas (XR)</strong>, como la realidad aumentada y la realidad virtual, se usan para enseñar, diseñar y explorar entornos digitales de forma interactiva. Los estudiantes pueden simular experimentos o visualizar modelos 3D sin riesgo ni materiales costosos.</p>
+      <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?q=80&w=1200&auto=format&fit=crop" alt="Realidad virtual educativa" />
+      <p>El futuro de la conectividad está centrado en la automatización, la inteligencia artificial y la integración entre el mundo físico y digital. Comprender estos conceptos abre las puertas a nuevas oportunidades laborales en ingeniería, robótica y desarrollo tecnológico.</p>
+      <button class="btn" data-target="contact">Ir a Contacto</button>
+    </section>
 
-<section id="mecanica" class="container">
-  <h2>Ciencias Aplicadas en la Ingeniería Automotriz</h2>
-  <p>
-    La mecánica y las ciencias aplicadas forman la base de la ingeniería automotriz. Entre las disciplinas más relevantes se encuentran:
-  </p>
-  <ul>
-    <li><strong>Física:</strong> Principios de dinámica, cinemática, fuerzas y energía aplicados a motores y chasis.</li>
-    <li><strong>Materiales:</strong> Estudio de aleaciones, polímeros y compuestos para mejorar resistencia y reducir peso.</li>
-    <li><strong>Aerodinámica:</strong> Diseño de carrocerías para minimizar la resistencia del aire y optimizar el consumo de combustible.</li>
-    <li><strong>Térmica:</strong> Gestión de calor en motores y sistemas de enfriamiento.</li>
-    <li><strong>Electrónica aplicada:</strong> Sensores, actuadores y sistemas de control que mejoran la eficiencia y seguridad.</li>
-  </ul>
-  
-  <h3>Dinámica del vehículo</h3>
-  <p>
-    La dinámica estudia cómo los vehículos se comportan en movimiento. Esto incluye:
-  </p>
-  <ul>
-    <li>Frenado y distribución de fuerzas</li>
-    <li>Suspensión y absorción de impactos</li>
-    <li>Control de estabilidad y sistemas antibloqueo (ABS)</li>
-  </ul>
-  
-  <img src="https://images.unsplash.com/photo-1600229946187-7c3d27b3e019?auto=format&fit=crop&w=1600&q=80" alt="Diagrama de suspensión de automóvil">
-  
-  <h3>Materiales avanzados</h3>
-  <p>
-    La elección de materiales influye directamente en la eficiencia y seguridad del vehículo. Los más usados incluyen:
-  </p>
-  <ul>
-    <li>Aluminio y magnesio para reducir peso</li>
-    <li>Acero de alta resistencia para la carrocería</li>
-    <li>Polímeros y plásticos reforzados para interiores y paneles</li>
-    <li>Compuestos de fibra de carbono en autos deportivos y de lujo</li>
-  </ul>
-  
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/5v3CZ8lVwDU" title="Video sobre materiales en la industria automotriz" frameborder="0" allowfullscreen></iframe>
-  </div>
-  
-  <h3>Aerodinámica y eficiencia</h3>
-  <p>
-    La aerodinámica reduce la resistencia al aire, aumentando la velocidad y eficiencia energética. Los ingenieros aplican:
-  </p>
-  <ul>
-    <li>Simulaciones CFD (Dinámica de Fluidos Computacional)</li>
-    <li>Diseño de alerones, difusores y spoilers</li>
-    <li>Carrocerías suaves con líneas optimizadas</li>
-  </ul>
-  
-  <img src="https://images.unsplash.com/photo-1605902711622-cfb43c44362c?auto=format&fit=crop&w=1600&q=80" alt="Vehículo con diseño aerodinámico">
-  
-  <p>
-    Estas disciplinas combinadas permiten crear vehículos con menor consumo de combustible, mayor seguridad y mejor rendimiento, formando la base para la futura generación de autos eléctricos y autónomos.
-  </p>
-</section>
-<section id="informatica" class="container">
-  <h2>Informática Automotriz</h2>
-  <p>
-    La informática aplicada a los vehículos es fundamental para controlar motores, sistemas de seguridad, navegación y comunicación. 
-    Los avances en software permiten optimizar la eficiencia, implementar sistemas de conducción asistida y preparar el terreno para la conducción autónoma.
-  </p>
-  
-  <h3>Sistemas de control electrónico</h3>
-  <p>
-    Los vehículos modernos utilizan <strong>ECU (Electronic Control Units)</strong> que gestionan:
-  </p>
-  <ul>
-    <li>Inyección de combustible</li>
-    <li>Encendido del motor</li>
-    <li>Sistemas de freno antibloqueo (ABS)</li>
-    <li>Control de estabilidad y tracción</li>
-    <li>Transmisiones automáticas</li>
-  </ul>
-  
-  <img src="https://images.unsplash.com/photo-1593463835097-c1e9e4e7346f?auto=format&fit=crop&w=1600&q=80" alt="Tablero de control electrónico de automóvil">
-  
-  <h3>Redes y comunicación CAN</h3>
-  <p>
-    Los vehículos modernos utilizan redes internas para que los diferentes módulos electrónicos se comuniquen entre sí:
-  </p>
-  <ul>
-    <li><strong>CAN Bus:</strong> Comunicación rápida entre sensores y actuadores.</li>
-    <li><strong>LIN Bus:</strong> Redes más simples para componentes secundarios.</li>
-    <li><strong>FlexRay:</strong> Alta velocidad y seguridad para sistemas críticos.</li>
-    <li>Ethernet automotriz: Para integración de multimedia y cámaras de seguridad.</li>
-  </ul>
-  
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/DgZlFAxT6qk" title="Introducción a redes CAN" frameborder="0" allowfullscreen></iframe>
-  </div>
-  
-  <h3>Software y diagnóstico</h3>
-  <p>
-    Los programas de diagnóstico permiten identificar fallas, actualizar firmware y calibrar sensores:
-  </p>
-  <ul>
-    <li>Scanners OBD-II para lectura de códigos de error</li>
-    <li>Software de simulación de motores y frenos</li>
-    <li>Aplicaciones de telemetría para seguimiento remoto</li>
-  </ul>
-</section>
-
-<section id="robotica" class="container">
-  <h2>Robótica en Vehículos</h2>
-  <p>
-    La robótica aplicada a la automoción incluye vehículos autónomos, sistemas de asistencia y robots de mantenimiento. La combinación de sensores, inteligencia artificial y control automático permite a los vehículos tomar decisiones en tiempo real.
-  </p>
-  
-  <h3>Vehículos autónomos</h3>
-  <ul>
-    <li><strong>Nivel 1-5:</strong> Clasificación de autonomía según SAE.</li>
-    <li><strong>LIDAR:</strong> Sensores láser para detección de obstáculos.</li>
-    <li><strong>Radar y cámaras:</strong> Percepción del entorno 360°.</li>
-    <li>Sistemas de navegación por GPS y mapas de alta precisión.</li>
-  </ul>
-  
-  <img src="https://images.unsplash.com/photo-1615841632014-0e7a2db5b6f4?auto=format&fit=crop&w=1600&q=80" alt="Vehículo autónomo con sensores LIDAR">
-  
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/3E6XlSgJlwk" title="Vehículos autónomos y robótica" frameborder="0" allowfullscreen></iframe>
-  </div>
-  
-  <h3>Sistemas de asistencia al conductor (ADAS)</h3>
-  <p>
-    Los ADAS utilizan robótica y software para mejorar la seguridad y experiencia de conducción:
-  </p>
-  <ul>
-    <li>Control de crucero adaptativo</li>
-    <li>Asistencia de mantenimiento de carril</li>
-    <li>Frenado automático de emergencia</li>
-    <li>Detección de peatones y ciclistas</li>
-    <li>Reconocimiento de señales de tráfico</li>
-  </ul>
-  
-  <h3>Robótica en mantenimiento y fabricación</h3>
-  <p>
-    La robótica industrial también juega un papel crucial:
-  </p>
-  <ul>
-    <li>Brazos robóticos para soldadura y ensamblaje</li>
-    <li>Sistemas automatizados de pintura y recubrimiento</li>
-    <li>Inspección por visión artificial y sensores de precisión</li>
-    <li>Mantenimiento predictivo mediante análisis de datos y sensores IoT</li>
-  </ul>
-  
-  <img src="https://images.unsplash.com/photo-1597802360087-3f4531c7f8e6?auto=format&fit=crop&w=1600&q=80" alt="Robots industriales en fábrica de automóviles">
-  
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/8A_0pjm_9E0" title="Robots en la industria automotriz" frameborder="0" allowfullscreen></iframe>
-  </div>
-</section>
-<section id="energias" class="container">
-  <h2>Energías en la Industria Automotriz</h2>
-  <p>
-    La industria automotriz está en plena transformación energética. La combinación de combustibles tradicionales y nuevas tecnologías de propulsión permite vehículos más eficientes y sostenibles.
-  </p>
-
-  <h3>Vehículos Eléctricos (EV)</h3>
-  <ul>
-    <li>Baterías de ion-litio de alta capacidad y eficiencia.</li>
-    <li>Sistemas de recarga rápida y gestión inteligente de energía.</li>
-    <li>Regeneración de energía en frenado (regenerative braking).</li>
-    <li>Reducción de emisiones directas a cero.</li>
-  </ul>
-
-  <img src="https://images.unsplash.com/photo-1581091012184-7d61cfbb288b?auto=format&fit=crop&w=1600&q=80" alt="Vehículo eléctrico moderno">
-
-  <h3>Vehículos Híbridos</h3>
-  <ul>
-    <li>Combinan motor eléctrico y de combustión interna.</li>
-    <li>Optimizan el consumo de combustible y reducen emisiones.</li>
-    <li>Permiten conducción en modos totalmente eléctricos en distancias cortas.</li>
-    <li>Software de gestión inteligente para balancear energía entre motores.</li>
-  </ul>
-
-  <h3>Hidrógeno y celdas de combustible</h3>
-  <ul>
-    <li>Transforman hidrógeno en electricidad mediante celdas de combustible.</li>
-    <li>No emiten CO2; el subproducto es vapor de agua.</li>
-    <li>Mayor autonomía que baterías eléctricas tradicionales.</li>
-    <li>Infraestructura de recarga limitada pero en crecimiento.</li>
-  </ul>
-
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/e2j1s0uIbN8" title="Tecnologías de energía en automóviles" frameborder="0" allowfullscreen></iframe>
-  </div>
-</section>
-
-<section id="historia" class="container">
-  <h2>Historia de la Automoción</h2>
-  <p>
-    La historia de los vehículos combina innovación, ingeniería y avances sociales. Desde los primeros carruajes motorizados hasta los autos autónomos, el desarrollo automotriz ha sido vertiginoso.
-  </p>
-
-  <h3>Siglo XIX</h3>
-  <ul>
-    <li>Invención del motor de combustión interna por Nikolaus Otto (1876).</li>
-    <li>Primeros vehículos autopropulsados a gasolina.</li>
-    <li>Innovaciones en diseño de ruedas, suspensión y dirección.</li>
-  </ul>
-
-  <h3>Siglo XX</h3>
-  <ul>
-    <li>Producción masiva gracias a Henry Ford y la línea de montaje.</li>
-    <li>Desarrollo de motores más eficientes y seguros.</li>
-    <li>Introducción de sistemas eléctricos y electrónicos.</li>
-    <li>Automóviles deportivos y de lujo con tecnologías avanzadas.</li>
-  </ul>
-
-  <img src="https://images.unsplash.com/photo-1607457982320-2e5697e76c47?auto=format&fit=crop&w=1600&q=80" alt="Auto clásico histórico">
-
-  <h3>Siglo XXI</h3>
-  <ul>
-    <li>Popularización de vehículos eléctricos e híbridos.</li>
-    <li>Implementación de sistemas de asistencia y conducción autónoma.</li>
-    <li>Mayor integración de informática y conectividad en los autos.</li>
-    <li>Desarrollo de vehículos inteligentes y sostenibles.</li>
-  </ul>
-</section>
-
-<section id="futuro" class="container">
-  <h2>Futuro de los Vehículos</h2>
-  <p>
-    El futuro de la automoción está marcado por la sostenibilidad, la inteligencia artificial y la robótica avanzada. Los vehículos se volverán cada vez más autónomos, conectados y respetuosos con el medio ambiente.
-  </p>
-
-  <h3>Conducción autónoma total</h3>
-  <ul>
-    <li>Autos capaces de operar sin intervención humana.</li>
-    <li>Inteligencia artificial avanzada para interpretar el entorno.</li>
-    <li>Redes de comunicación vehículo a vehículo (V2V) y vehículo a infraestructura (V2I).</li>
-  </ul>
-
-  <h3>Movilidad sostenible</h3>
-  <ul>
-    <li>Mayor uso de energías renovables para recarga de vehículos eléctricos.</li>
-    <li>Optimización de transporte público y compartido.</li>
-    <li>Ciudades inteligentes con integración de tráfico y energía.</li>
-  </ul>
-
-  <h3>Tecnologías emergentes</h3>
-  <ul>
-    <li>Sistemas de propulsión híbridos avanzados y motores eléctricos más ligeros.</li>
-    <li>Materiales ultraligeros y resistentes.</li>
-    <li>Interfaces hombre-máquina mediante realidad aumentada y virtual.</li>
-    <li>Robots de mantenimiento autónomos y personalización de vehículos mediante impresión 3D.</li>
-  </ul>
-
-  <img src="https://images.unsplash.com/photo-1600181953931-f7f95e5a30f3?auto=format&fit=crop&w=1600&q=80" alt="Concepto de auto futurista autónomo">
-
-  <div class="video-wrapper">
-    <iframe src="https://www.youtube.com/embed/2zC2NjvgrZ0" title="Futuro de la automoción" frameborder="0" allowfullscreen></iframe>
-  </div>
-</section>
-<section id="contacto" class="container">
-  <h2>Contacto</h2>
-  <p>
-    Si tienes preguntas, sugerencias o quieres colaborar, puedes contactarnos a través del siguiente formulario. 
-    Nos aseguramos de responder en el menor tiempo posible.
-  </p>
-
-  <form action="#" method="post" class="contact-form">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" placeholder="Tu nombre" required>
-
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email" placeholder="Tu correo" required>
-
-    <label for="asunto">Asunto:</label>
-    <input type="text" id="asunto" name="asunto" placeholder="Tema de tu mensaje" required>
-
-    <label for="mensaje">Mensaje:</label>
-    <textarea id="mensaje" name="mensaje" rows="6" placeholder="Escribe tu mensaje aquí..." required></textarea>
-
-    <button type="submit">Enviar</button>
-  </form>
-
-  <div class="contact-info">
-    <h3>Otras formas de contacto</h3>
-    <ul>
-      <li>Email: <a href="mailto:info@autosinnovacion.com">info@autosinnovacion.com</a></li>
-      <li>Teléfono: +34 123 456 789</li>
-      <li>Redes Sociales:
-        <a href="https://twitter.com" target="_blank">Twitter</a> |
-        <a href="https://facebook.com" target="_blank">Facebook</a> |
-        <a href="https://linkedin.com" target="_blank">LinkedIn</a>
-      </li>
-    </ul>
+    <!-- CONTACTO -->
+    <section class="card page" id="contact">
+      <h2 class="title">Contacto</h2>
+      <p>¿Tienes preguntas, ideas o deseas compartir tu propio proyecto educativo? Envíanos tu mensaje a través de este formulario. La información será procesada de forma simulada solo con fines académicos.</p>
+      <img src="https://images.unsplash.com/photo-1581090700227-1e37b190418e?q=80&w=1200&auto=format&fit=crop" alt="Comunicación digital" />
+      <form id="form" onsubmit="return handleSubmit(event)">
+        <input type="text" id="name" placeholder="Tu nombre completo" required>
+        <input type="email" id="email" placeholder="Tu correo electrónico" required>
+        <select id="role">
+          <option>Estudiante</option>
+          <option>Docente</option>
+          <option>Investigador</option>
+        </select>
+        <textarea id="msg" placeholder="Escribe tu mensaje o el enlace de tu proyecto..."></textarea>
+        <button class="btn" type="submit">Enviar</button>
+        <div id="status" style="color:#94a3b8;font-size:.9rem;margin-top:.3rem;"></div>
+      </form>
+    </section>
   </div>
 
-  <img src="https://images.unsplash.com/photo-1581092918360-6f4089ff9c58?auto=format&fit=crop&w=1600&q=80" alt="Formulario de contacto">
-</section>
+  <footer>
+    Proyecto elaborado por Luis Mauricio Figueroa · Bachillerato Técnico en Informática · 2025
+  </footer>
 
-<footer class="footer">
-  <div class="footer-content">
-    <p>&copy; 2025 Autos e Innovación. Todos los derechos reservados.</p>
-    <p>
-      Recursos adicionales:
-      <a href="https://www.nhtsa.gov/" target="_blank">NHTSA</a> |
-      <a href="https://www.fia.com/" target="_blank">FIA</a> |
-      <a href="https://www.autoblog.com/" target="_blank">Autoblog</a>
-    </p>
-    <p>Diseñado y desarrollado por tu equipo de aprendizaje en ingeniería automotriz e informática aplicada.</p>
-  </div>
-</footer>
+  <script>
+    // Navegación SPA
+    const navlinks = document.querySelectorAll('.navlink, .btn[data-target]');
+    const pages = document.querySelectorAll('.page');
+    function showPage(id) {
+      pages.forEach(p => p.classList.toggle('active', p.id === id));
+      navlinks.forEach(n => n.classList.toggle('active', n.dataset.target === id));
+      location.hash = id;
+      window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+    navlinks.forEach(n => n.addEventListener('click', () => showPage(n.dataset.target)));
+    window.addEventListener('hashchange', () => showPage(location.hash.replace('#','') || 'home'));
+    showPage(location.hash.replace('#','') || 'home');
 
-
+    // Envío simulado
+    function handleSubmit(e){
+      e.preventDefault();
+      const name=document.getElementById('name').value.trim();
+      const email=document.getElementById('email').value.trim();
+      const msg=document.getElementById('msg').value.trim();
+      const status=document.getElementById('status');
+      if(!name||!email){status.textContent='Por favor completa todos los campos requeridos.';return false;}
+      status.textContent='✅ Mensaje enviado correctamente (simulado).';
+      e.target.reset();
+      setTimeout(()=>status.textContent='',5000);
+      return false;
+    }
+  </script>
+</body>
+</html>
